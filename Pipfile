@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 pandas = "1.5.3"
 openpyxl = "3.1.0"
-black = "*"
 
 [dev-packages]
 
