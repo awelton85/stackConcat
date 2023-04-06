@@ -6,13 +6,18 @@ from openpyxl.styles import PatternFill
 
 def get_file_path(title):
     """Get the file path from the user."""
-    file_path = filedialog.askopenfilename(initialdir="/home/anthony/Downloads/", title=title)
+    file_path = filedialog.askopenfilename(
+        initialdir="/home/anthony/Downloads/", title=title
+    )
     return file_path
 
 
 def get_save_path(title):
     """Get the save path from the user."""
-    save_path = filedialog.asksaveasfilename(initialdir="/home/anthony/Downloads/", title=title) + ".xlsx"
+    save_path = (
+        filedialog.asksaveasfilename(initialdir="/home/anthony/Downloads/", title=title)
+        + ".xlsx"
+    )
     return save_path
 
 
@@ -45,7 +50,8 @@ df1 = df1.drop(
         "Cost Type",
         "Extended Cost",
         "Purchase Unit",
-    ])
+    ]
+)
 
 del df2["Scale"]
 
@@ -77,10 +83,14 @@ ws = wb.active
 
 # input formulas for the Total Cost and Calculated columns, color the input cells light orange
 for row in range(2, ws.max_row + 1):
-    ws.cell(row=row, column=6).fill = xl.styles.PatternFill(start_color="FFCC99", end_color="FFCC99", fill_type="solid")
+    ws.cell(row=row, column=6).fill = xl.styles.PatternFill(
+        start_color="FFCC99", end_color="FFCC99", fill_type="solid"
+    )
     ws.cell(row=row, column=7).value = f"=F{row}*D{row}"
     ws.cell(row=row, column=8).value = f'=IF(ISBLANK(A{row}),"",G{row}/A{row})'
-    ws.cell(row=row, column=9).fill = xl.styles.PatternFill(start_color="FFCC99", end_color="FFCC99", fill_type="solid")
+    ws.cell(row=row, column=9).fill = xl.styles.PatternFill(
+        start_color="FFCC99", end_color="FFCC99", fill_type="solid"
+    )
     ws.cell(row=row, column=10).value = f"=I{row}*A{row}"
     ws.cell(row=row, column=11).value = f'=IF(ISBLANK(A{row}),"",J{row}/D{row})'
     ws.cell(row=row, column=12).value = f'=IF(ISBLANK(A{row}),"",E{row})'
@@ -102,10 +112,18 @@ ws.cell(row=ws.max_row, column=7).font = xl.styles.Font(bold=True)
 ws.cell(row=ws.max_row, column=10).font = xl.styles.Font(bold=True)
 
 # add a top border to the total and sum cells
-ws.cell(row=ws.max_row, column=6).border = xl.styles.Border(top=xl.styles.Side(border_style="thin"))
-ws.cell(row=ws.max_row, column=7).border = xl.styles.Border(top=xl.styles.Side(border_style="thin"))
-ws.cell(row=ws.max_row, column=9).border = xl.styles.Border(top=xl.styles.Side(border_style="thin"))
-ws.cell(row=ws.max_row, column=10).border = xl.styles.Border(top=xl.styles.Side(border_style="thin"))
+ws.cell(row=ws.max_row, column=6).border = xl.styles.Border(
+    top=xl.styles.Side(border_style="thin")
+)
+ws.cell(row=ws.max_row, column=7).border = xl.styles.Border(
+    top=xl.styles.Side(border_style="thin")
+)
+ws.cell(row=ws.max_row, column=9).border = xl.styles.Border(
+    top=xl.styles.Side(border_style="thin")
+)
+ws.cell(row=ws.max_row, column=10).border = xl.styles.Border(
+    top=xl.styles.Side(border_style="thin")
+)
 
 format_column_as_number(1)
 format_column_as_number(4)
