@@ -45,8 +45,8 @@ df1 = df1.drop(
         "Cost Type",
         "Extended Cost",
         "Purchase Unit",
-    ]
-)
+    ])
+
 del df2["Scale"]
 
 # rename the column in df1
@@ -115,7 +115,6 @@ format_column_as_money(8)
 format_column_as_money(9)
 format_column_as_money(10)
 format_column_as_money(11)
-
 
 # fix all widths to fit the data
 for col in ws.columns:
