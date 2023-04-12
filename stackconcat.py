@@ -143,7 +143,7 @@ for col in ws.columns:
             if len(str(cell.value)) > max_length:
                 max_length = len(cell.value)
         except Exception as e:
-            print(e)
+            pass
     adjusted_width = (max_length + 2) * 1.1
     ws.column_dimensions[column].width = adjusted_width
 
