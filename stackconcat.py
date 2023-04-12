@@ -15,8 +15,8 @@ def get_file_path(title):
 def get_save_path(title):
     """Get the save path from the user."""
     save_path = (
-        filedialog.asksaveasfilename(initialdir="/home/anthony/Downloads/", title=title)
-        + ".xlsx"
+            filedialog.asksaveasfilename(initialdir="/home/anthony/Downloads/", title=title)
+            + ".xlsx"
     )
     return save_path
 
