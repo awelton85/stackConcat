@@ -125,14 +125,14 @@ ws.cell(row=ws.max_row, column=10).border = xl.styles.Border(
     top=xl.styles.Side(border_style="thin")
 )
 
-format_column_as_number(1)
-format_column_as_number(4)
-format_column_as_money(6)
-format_column_as_money(7)
-format_column_as_money(8)
-format_column_as_money(9)
-format_column_as_money(10)
-format_column_as_money(11)
+number_columns = [1, 4]
+money_columns = [6, 7, 8, 9, 10, 11]
+
+for column in number_columns:
+    format_column_as_number(column)
+
+for column in money_columns:
+    format_column_as_money(column)
 
 # fix all widths to fit the data
 for col in ws.columns:
@@ -142,10 +142,12 @@ for col in ws.columns:
         try:  # Necessary to avoid error on empty cells
             if len(str(cell.value)) > max_length:
                 max_length = len(cell.value)
-        except Exception as e:
+        except TypeError:
             pass
     adjusted_width = (max_length + 2) * 1.1
     ws.column_dimensions[column].width = adjusted_width
 
 # save workbook as xlsx file
 wb.save(output_file)
+
+print("Done")
