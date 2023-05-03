@@ -4,41 +4,32 @@ import openpyxl as xl
 from openpyxl.styles import PatternFill
 
 
-def get_file_path(title):
+def get_input_folder() -> str:
     """Get the file path from the user."""
-    file_path = filedialog.askopenfilename(
-        initialdir="/home/anthony/Downloads/", title=title
-    )
+    file_path = filedialog.askdirectory(initialdir="~/Downloads/")
     return file_path
 
 
-def get_save_path(title):
-    """Get the save path from the user."""
-    save_path = (
-            filedialog.asksaveasfilename(initialdir="/home/anthony/Downloads/", title=title)
-            + ".xlsx"
-    )
-    return save_path
-
-
-def add_column(df, column_name, column_data):
+def add_column(df: any, column_name: str, column_data: str) -> None:
     """Add a column to a dataframe."""
     df[column_name] = column_data
 
 
-def format_column_as_number(column_number):
+def format_column_as_number(column_number: int) -> None:
     for r in range(2, ws.max_row + 1):
         ws.cell(row=r, column=column_number).number_format = "#,##0.00"
 
 
-def format_column_as_money(column_number):
+def format_column_as_money(column_number: int) -> None:
     for i in range(2, ws.max_row + 1):
         ws.cell(row=i, column=column_number).number_format = "$#,##0.00"
 
 
-df1 = pd.read_excel(get_file_path("Select Item Cost By Takeoff"))
-df2 = pd.read_excel(get_file_path("Select Takeoff Quantity"))
-output_file = get_save_path("Select Output File")
+input_folder = get_input_folder()
+job_name = input_folder.split("/")[-1]
+df1 = pd.read_excel(input_folder + "/Item Cost By Takeoff.xlsx")
+df2 = pd.read_excel(input_folder + "/Takeoff Quantity.xlsx")
+output_file = f"{input_folder}/{job_name}_TO.xlsx"
 
 # delete unnecessary columns from df1 and df2
 df1 = df1.drop(
@@ -139,6 +130,7 @@ for col in ws.columns:
     max_length = 0
     column = col[0].column_letter  # Get the column name
     for cell in col:
+        # noinspection PyBroadException
         try:  # Necessary to avoid error on empty cells
             if len(str(cell.value)) > max_length:
                 max_length = len(cell.value)
